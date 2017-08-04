@@ -12,13 +12,11 @@
 function plugin_wp_force_login() {
 	is_user_logged_in() || auth_redirect();
 }
-add_action( 'parse_request', 'p2fl_force_login', 1 );
-
-// Remove Adminbar for all users, except admins
-add_action( 'after_setup_theme', 'remove_admin_bar' );
+add_action( 'parse_request', 'plugin_wp_force_login', 1 );
 
 function remove_admin_bar() {
 	if ( ! current_user_can( 'manage_options' ) && ! is_admin() ) {
 		show_admin_bar( false );
 	}
 }
+add_action( 'after_setup_theme', 'remove_admin_bar' );
